@@ -1,10 +1,12 @@
 import React from 'react';
+import AlbunsSearched from '../components/AlbunsSearched';
 import Header from '../components/Header';
 
 class Search extends React.Component {
   state ={
     searchArtist: '',
     isSaveButtonDisabled: true,
+    showAlbuns: false,
   }
 
 validate = () => {
@@ -23,8 +25,12 @@ validate = () => {
     }, () => this.validate());
   }
 
+  handleShowAlbuns = () => {
+    this.setState({ showAlbuns: true });
+  }
+
   render() {
-    const { searchArtist, isSaveButtonDisabled } = this.state;
+    const { searchArtist, isSaveButtonDisabled, showAlbuns } = this.state;
     return (
       <div data-testid="page-search">
         <Header />
@@ -44,11 +50,12 @@ validate = () => {
             type="submit"
             data-testid="search-artist-button"
             disabled={ isSaveButtonDisabled }
-            onClick={ this.handleClick }
+            onClick={ this.handleShowAlbuns }
           >
             Pesquisar
           </button>
         </div>
+        { showAlbuns && <AlbunsSearched />}
       </div>
     );
   }

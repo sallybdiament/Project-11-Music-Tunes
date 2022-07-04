@@ -1,26 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Card extends React.Component {
   render() {
-    const { cardInfo } = this.props;
-    const { collectionName, artistName, artworkUrl100 } = cardInfo;
+    const { name, imgUrl, collectionName, collectionId } = this.props;
     return (
       <article>
-        <img alt={ collectionName } src={ artworkUrl100 } />
-        <h3>{collectionName}</h3>
-        <h2>{artistName}</h2>
+        <Link
+          to={ `/album/${collectionId}` }
+          data-testid={ `link-to-album-${collectionId}` }
+        >
+          <img alt={ name } src={ imgUrl } />
+          <h2>{name}</h2>
+          <p>{collectionId}</p>
+          <p>{collectionName}</p>
+        </Link>
       </article>
     );
   }
 }
 
 Card.propTypes = {
-  cardInfo: PropTypes.shape({
-    artworkUrl100: PropTypes.string,
-    artistName: PropTypes.string,
-    collectionName: PropTypes.string,
-  }).isRequired,
+  name: PropTypes.string.isRequired,
+  imgUrl: PropTypes.string.isRequired,
+  collectionName: PropTypes.string.isRequired,
+  collectionId: PropTypes.number.isRequired,
 };
 
 export default Card;

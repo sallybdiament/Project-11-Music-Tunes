@@ -1,12 +1,15 @@
 import React from 'react';
-import AlbunsSearched from '../components/AlbunsSearched';
 import Header from '../components/Header';
+import Carregando from './Carregando';
+import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import Card from '../components/Card';
 
 class Search extends React.Component {
   state ={
     searchArtist: '',
     isSaveButtonDisabled: true,
-    showAlbuns: false,
+    isLoading: false,
+    resultsAlbuns: [],
   }
 
 validate = () => {
@@ -26,11 +29,30 @@ validate = () => {
   }
 
   handleShowAlbuns = () => {
-    this.setState({ showAlbuns: true });
-  }
+    const { searchArtist } = this.state;
+    this.setState((prev) => ({
+      isLoading: true,
+      copySearchArtist: prev.searchArtist,
+    }), async () => {
+      const result = await searchAlbumsAPI(searchArtist);
+      this.setState({
+        resultsAlbuns: result,
+      }, () => {
+        this.setState({
+          isLoading: false,
+          searchArtist: '',
+        });
+      });
+    });
+  };
 
   render() {
-    const { searchArtist, isSaveButtonDisabled, showAlbuns } = this.state;
+    const {
+      searchArtist,
+      isSaveButtonDisabled,
+      isLoading,
+      resultsAlbuns,
+      copySearchArtist } = this.state;
     return (
       <div data-testid="page-search">
         <Header />
@@ -55,7 +77,29 @@ validate = () => {
             Pesquisar
           </button>
         </div>
-        { showAlbuns && <AlbunsSearched />}
+        { isLoading && <Carregando />}
+        { !!resultsAlbuns.length
+        && (
+          <>
+            <p>
+              {`Resultado de álbuns de: ${copySearchArtist}`}
+            </p>
+            { resultsAlbuns.map((album) => (
+              <div key={ album.collectionId }>
+                <Card
+                  name={ album.artistName }
+                  imgUrl={ album.artworkUrl100 }
+                  collectionName={ album.collectionName }
+                  collectionId={ album.collectionId }
+                />
+              </div>
+            )) }
+          </>
+        )}
+        { resultsAlbuns.length === 0
+        && (
+          <p> Nenhum álbum foi encontrado </p>
+        )}
       </div>
     );
   }

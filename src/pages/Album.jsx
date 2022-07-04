@@ -17,8 +17,8 @@ class Album extends React.Component {
     const idAlbum = match.params.id;
     const result = await getMusics(idAlbum);
     console.log(result[0].wrapperType);
-    const musicsInfo = result.shift();
-    const musics = result;
+    const musicsInfo = result[0];
+    const musics = result.filter((music, i) => i > 0);
     console.log(musics);
     console.log(musicsInfo);
     this.setState({ musicsInfo, musics, isLoading: false });

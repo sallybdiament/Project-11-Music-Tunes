@@ -11,11 +11,20 @@ class MusicCard extends React.Component {
 
   onCheckboxChange = async () => {
     this.setState({ isLoading: true });
-    const objeto = {
-      test: 'testes',
-    };
+    const { objeto } = this.props;
+    console.log(objeto.favorita);
     await addSong(objeto);
     this.setState({ isLoading: false });
+    this.setState({
+      favorite: true,
+    });
+  }
+
+  componentDidMount = () => {
+    const { objeto } = this.props;
+    if (objeto.favorita) {
+      this.setState({ favorite: true });
+    }
   }
 
   render() {
@@ -39,7 +48,7 @@ class MusicCard extends React.Component {
             data-testid={ `checkbox-music-${trackId}` }
             name="favorite"
             id="favorite"
-            value={ favorite }
+            checked={ favorite }
             onChange={ this.onCheckboxChange }
           />
         </label>
@@ -52,7 +61,12 @@ class MusicCard extends React.Component {
 MusicCard.propTypes = {
   trackName: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
-  trackId: PropTypes.string.isRequired,
+  trackId: PropTypes.number.isRequired,
+  // favorita: PropTypes.bool.isRequired,
+  objeto: PropTypes.shape({
+    trackId: PropTypes.number.isRequired,
+    favorita: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export default MusicCard;

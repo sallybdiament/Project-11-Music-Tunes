@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
 import Carregando from '../pages/Carregando';
 
 class MusicCard extends React.Component {
@@ -11,13 +11,24 @@ class MusicCard extends React.Component {
 
   onCheckboxChange = async () => {
     this.setState({ isLoading: true });
-    const { objeto } = this.props;
-    console.log(objeto.favorita);
-    await addSong(objeto);
-    this.setState({ isLoading: false });
-    this.setState({
-      favorite: true,
-    });
+    const { favorite } = this.state;
+    if (!favorite) {
+      const { objeto } = this.props;
+      console.log(objeto.favorita);
+      await addSong(objeto);
+      // await removeSong(objeto);
+      this.setState({ isLoading: false });
+      this.setState({
+        favorite: true,
+      });
+    } else {
+      const { objeto } = this.props;
+      await removeSong(objeto);
+      this.setState({ isLoading: false });
+      this.setState({
+        favorite: false,
+      });
+    }
   }
 
   componentDidMount = () => {

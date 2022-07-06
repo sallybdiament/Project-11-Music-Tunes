@@ -11,6 +11,7 @@ class Header extends React.Component {
 
   componentDidMount = async () => {
     const result = await getUser();
+    // console.log(result);
     this.setState({ headerName: result.name });
     this.setState({ isLoading: true });
   };

@@ -13,8 +13,12 @@ class Favorites extends React.Component {
   componentDidMount = async () => {
     this.setState({ isLoading: true });
     const favorites = await getFavoriteSongs();
-    const favoriteSongs = favorites;
-    this.setState({ favoriteSongs, isLoading: false });
+    const favoriteSongsComFavTrue = favorites.map((music) => ({
+      ...music, favorita: 'true',
+    }));
+    this.setState({ favoriteSongs: favoriteSongsComFavTrue,
+      isLoading: false,
+    });
   }
 
   render() {
@@ -32,7 +36,6 @@ class Favorites extends React.Component {
                   previewUrl={ music.previewUrl }
                   trackId={ music.trackId }
                   objeto={ music }
-                  // favorita={ true }
                 />
               </div>
             ))

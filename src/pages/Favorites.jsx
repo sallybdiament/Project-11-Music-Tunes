@@ -36,6 +36,7 @@ class Favorites extends React.Component {
                   previewUrl={ music.previewUrl }
                   trackId={ music.trackId }
                   objeto={ music }
+                  removeFromFavorite="removeFavorite"
                 />
               </div>
             ))

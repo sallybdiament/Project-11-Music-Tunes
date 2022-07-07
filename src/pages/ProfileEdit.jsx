@@ -83,10 +83,6 @@ resgatandoInfoUsuarios = async () => {
         <p>Profile Edit</p>
         { isLoading ? <Carregando /> : null }
         <div>
-          {/* <p>{ userName }</p>
-          <p>{ userEmail }</p>
-          <p>{ userDescription }</p>
-          <img data-testid="profile-image" src={ userImg } alt={ userName } /> */}
           <h1>Formulário para editar perfil:</h1>
           <form>
             <label htmlFor="userName">

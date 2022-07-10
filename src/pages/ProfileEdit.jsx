@@ -1,6 +1,6 @@
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+// import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { updateUser, getUser } from '../services/userAPI';
 import Carregando from './Carregando';
@@ -13,7 +13,7 @@ class ProfileEdit extends React.Component {
     userImg: '',
     isLoading: false,
     isSavebuttonDisabled: true,
-    // redirect: false,
+    redirect: false,
   }
 
   componentDidMount = () => {
@@ -40,10 +40,10 @@ resgatandoInfoUsuarios = async () => {
     });
     const { userName, userEmail, userDescription, userImg } = this.state;
     console.log(userName);
-    if (userName.length > 0
-      && userEmail.length > 0
-      && userImg.length > 0
-      && userDescription.length > 0
+    if (userName.length !== 0
+      && userEmail.length !== 0
+      && userImg.length !== 0
+      && userDescription.length !== 0
     ) {
       this.setState({ isSavebuttonDisabled: false });
     } else {
@@ -51,10 +51,10 @@ resgatandoInfoUsuarios = async () => {
     }
   }
 
-goBackToProfile = () => {
-  const { history } = this.props;
-  history.push('/profile');
-}
+  // goBackToProfile = () => {
+  //   const { history } = this.props;
+  //   history.push('/profile');
+  // }
 
   handleClick = async () => {
     const {
@@ -70,8 +70,10 @@ goBackToProfile = () => {
       description: userDescription,
     };
     await updateUser(objeto);
-    // this.setState({ redirect: true });
-    goBackToProfile();
+    this.setState({
+      isLoading: false,
+      redirect: true });
+    // goBackToProfile();
   }
 
   render() {
@@ -82,7 +84,7 @@ goBackToProfile = () => {
       userDescription,
       userImg,
       isSavebuttonDisabled,
-      // redirect,
+      redirect,
     } = this.state;
     return (
       <div data-testid="page-profile-edit">
@@ -100,7 +102,6 @@ goBackToProfile = () => {
                 name="userName"
                 id="userName"
                 value={ userName }
-                // placeholder={ userName }
                 onChange={ this.onInputChange }
               />
             </label>
@@ -111,7 +112,6 @@ goBackToProfile = () => {
                 data-testid="edit-input-email"
                 name="userEmail"
                 id="userEmail"
-                // placeholder={ userEmail }
                 value={ userEmail }
                 onChange={ this.onInputChange }
               />
@@ -124,7 +124,6 @@ goBackToProfile = () => {
                 name="userDescription"
                 id="userDescription"
                 value={ userDescription }
-                // placeholder={ userDescription }
                 onChange={ this.onInputChange }
               />
             </label>
@@ -136,7 +135,6 @@ goBackToProfile = () => {
                 name="userImg"
                 id="userImg"
                 value={ userImg }
-                // placeholder={ userImg }
                 onChange={ this.onInputChange }
               />
             </label>
@@ -150,14 +148,14 @@ goBackToProfile = () => {
             </button>
           </form>
         </div>
-        {/* { redirect && <Redirect to="/profile" />} */}
+        { redirect && <Redirect to="/profile" />}
       </div>
     );
   }
 }
 
-ProfileEdit.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-};
+// ProfileEdit.propTypes = {
+//   history: PropTypes.objectOf(PropTypes.any).isRequired,
+// };
 
 export default ProfileEdit;

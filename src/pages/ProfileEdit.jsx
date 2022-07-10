@@ -89,6 +89,7 @@ resgatandoInfoUsuarios = async () => {
     return (
       <div data-testid="page-profile-edit">
         <Header />
+        { redirect && <Redirect to="/profile" />}
         <p>Profile Edit</p>
         { isLoading ? <Carregando /> : null }
         <div>
@@ -148,7 +149,6 @@ resgatandoInfoUsuarios = async () => {
             </button>
           </form>
         </div>
-        { redirect && <Redirect to="/profile" />}
       </div>
     );
   }

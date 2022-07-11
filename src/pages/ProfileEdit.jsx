@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+// import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { updateUser, getUser } from '../services/userAPI';
 import Carregando from './Carregando';
@@ -13,7 +13,7 @@ class ProfileEdit extends React.Component {
     userImg: '',
     isLoading: false,
     isSavebuttonDisabled: true,
-    redirect: false,
+    // redirect: false,
   }
 
   componentDidMount = () => {
@@ -51,10 +51,10 @@ resgatandoInfoUsuarios = async () => {
     }
   }
 
-  // goBackToProfile = () => {
-  //   const { history } = this.props;
-  //   history.push('/profile');
-  // }
+  goBackToProfile = () => {
+    const { history } = this.props;
+    history.push('/profile');
+  }
 
   handleClick = async () => {
     const {
@@ -71,9 +71,9 @@ resgatandoInfoUsuarios = async () => {
     };
     await updateUser(objeto);
     this.setState({
-      isLoading: false,
-      redirect: true });
-    // goBackToProfile();
+      // redirect: true,
+      isLoading: false });
+    this.goBackToProfile();
   }
 
   render() {
@@ -84,12 +84,12 @@ resgatandoInfoUsuarios = async () => {
       userDescription,
       userImg,
       isSavebuttonDisabled,
-      redirect,
+      // redirect,
     } = this.state;
     return (
       <div data-testid="page-profile-edit">
         <Header />
-        { redirect && <Redirect to="/profile" />}
+        {/* { redirect && <Redirect to="/profile" />} */}
         <p>Profile Edit</p>
         { isLoading ? <Carregando /> : null }
         <div>
@@ -154,8 +154,8 @@ resgatandoInfoUsuarios = async () => {
   }
 }
 
-// ProfileEdit.propTypes = {
-//   history: PropTypes.objectOf(PropTypes.any).isRequired,
-// };
+ProfileEdit.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default ProfileEdit;

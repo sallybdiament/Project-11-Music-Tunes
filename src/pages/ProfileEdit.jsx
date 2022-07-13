@@ -18,6 +18,15 @@ class ProfileEdit extends React.Component {
 
   componentDidMount = () => {
     this.resgatandoInfoUsuarios();
+    if (userName.length !== 0
+      && userEmail.length !== 0
+      && userImg.length !== 0
+      && userDescription.length !== 0
+    ) {
+      this.setState({ isSavebuttonDisabled: false });
+    } else {
+      this.setState({ isSavebuttonDisabled: true });
+    }
   };
 
 resgatandoInfoUsuarios = async () => {
@@ -57,12 +66,7 @@ resgatandoInfoUsuarios = async () => {
   // }
 
   handleClick = async () => {
-    const {
-      userName,
-      userEmail,
-      userDescription,
-      userImg,
-    } = this.state;
+    const { userName, userEmail, userDescription, userImg } = this.state;
     const objeto = {
       name: userName,
       email: userEmail,

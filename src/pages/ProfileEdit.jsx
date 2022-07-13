@@ -39,7 +39,7 @@ resgatandoInfoUsuarios = async () => {
       [id]: value,
     });
     const { userName, userEmail, userDescription, userImg } = this.state;
-    console.log(userName);
+    // console.log(userName);
     if (userName.length !== 0
       && userEmail.length !== 0
       && userImg.length !== 0
@@ -51,10 +51,10 @@ resgatandoInfoUsuarios = async () => {
     }
   }
 
-  goBackToProfile = () => {
-    const { history } = this.props;
-    history.push('/profile');
-  }
+  // goBackToProfile = () => {
+  //   const { history } = this.props;
+  //   history.push('/profile');
+  // }
 
   handleClick = async () => {
     const {
@@ -69,11 +69,13 @@ resgatandoInfoUsuarios = async () => {
       image: userImg,
       description: userDescription,
     };
+    console.log('clicou');
+    const { history } = this.props;
+    history.push('/profile');
     await updateUser(objeto);
-    this.setState({
-      // redirect: true,
-      isLoading: false });
-    this.goBackToProfile();
+    // this.setState({
+    // redirect: true,
+    // isLoading: false });
   }
 
   render() {
@@ -92,6 +94,7 @@ resgatandoInfoUsuarios = async () => {
         {/* { redirect && <Redirect to="/profile" />} */}
         <p>Profile Edit</p>
         { isLoading ? <Carregando /> : null }
+        {/* { isLoading && <Carregando />} */}
         <div>
           <h1>Formulário para editar perfil:</h1>
           <form>
